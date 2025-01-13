@@ -24,8 +24,7 @@ export function OrderTracker() {
                 className={cn(
                   "w-8 h-8 flex items-center justify-center rounded-full",
                   {
-                    "bg-primary text-white": step.status === "complete",
-                    "bg-primary text-white": step.status === "current",
+                    "bg-primary text-white": step.status === "complete" || step.status === "current",
                     "bg-gray-200": step.status === "upcoming",
                   }
                 )}
