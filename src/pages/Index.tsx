@@ -14,9 +14,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { Link, useLocation } from "react-router-dom";
 
 const Index = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const location = useLocation();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -45,11 +47,11 @@ const Index = () => {
             </Button>
           </div>
           <nav className="space-y-2">
-            <NavItem icon={LayoutDashboard} label="Dashboard" active />
-            <NavItem icon={Menu} label="Menu" />
-            <NavItem icon={ShoppingBag} label="Orders" />
-            <NavItem icon={Calendar} label="Reservations" />
-            <NavItem icon={Settings} label="Settings" />
+            <NavItem icon={LayoutDashboard} label="Dashboard" to="/" active={location.pathname === "/"} />
+            <NavItem icon={Menu} label="Menu" to="/menu" active={location.pathname === "/menu"} />
+            <NavItem icon={ShoppingBag} label="Orders" to="/orders" active={location.pathname === "/orders"} />
+            <NavItem icon={Calendar} label="Reservations" to="/reservations" active={location.pathname === "/reservations"} />
+            <NavItem icon={Settings} label="Settings" to="/settings" active={location.pathname === "/settings"} />
           </nav>
         </div>
       </div>
@@ -92,10 +94,12 @@ const Index = () => {
 const NavItem = ({
   icon: Icon,
   label,
+  to,
   active,
 }: {
   icon: any;
   label: string;
+  to: string;
   active?: boolean;
 }) => {
   const [sidebarOpen] = useState(true);
@@ -107,9 +111,12 @@ const NavItem = ({
         "w-full justify-start text-white hover:bg-sidebar-hover",
         active && "bg-sidebar-hover"
       )}
+      asChild
     >
-      <Icon className="h-5 w-5" />
-      {sidebarOpen && <span className="ml-2">{label}</span>}
+      <Link to={to}>
+        <Icon className="h-5 w-5" />
+        {sidebarOpen && <span className="ml-2">{label}</span>}
+      </Link>
     </Button>
   );
 };
